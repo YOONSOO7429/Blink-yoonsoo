@@ -31,7 +31,7 @@ router.use((req, res, next) => {
   next();
 });
 
-router.get("/health", (req, res) => {
+router.get("http://spa-mall.shop:8080/health", (req, res) => {
   const data = {
     uptime: process.uptime(),
     message: "Ok",
@@ -40,8 +40,6 @@ router.get("/health", (req, res) => {
 
   res.status(200).send(data);
 });
-
-app.use("/api/v1", router);
 
 const server = http.createServer(app);
 
