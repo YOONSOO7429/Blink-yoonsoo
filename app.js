@@ -1,4 +1,6 @@
 const express = require("express");
+const http = require("http");
+const router = express.Router();
 
 const { Users, sequelize } = require("./models");
 const MyPageRouter = require("./routes/mypage");
@@ -23,6 +25,25 @@ app.use(
     credentials: true,
   })
 );
+
+router.use((req, res, next) => {
+  res.header("Access-Control-Allow-Methods", "GET");
+  next();
+});
+
+router.get("/health", (req, res) => {
+  const data = {
+    uptime: process.uptime(),
+    message: "Ok",
+    date: new Date(),
+  };
+
+  res.status(200).send(data);
+});
+
+app.use("/api/v1", router);
+
+const server = http.createServer(app);
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -70,7 +91,4 @@ app.get("/download/:imageName", (req, res) => {
   res.sendFile(__dirname + "/uploads/" + imageName.imageName);
 });
 
-const PORT = 3000;
-app.listen(PORT, () => {
-  console.log(PORT, "포트 번호로 서버가 실행되었습니다.");
-});
+server.listen(3000);
