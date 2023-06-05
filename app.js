@@ -31,14 +31,14 @@ router.use((req, res, next) => {
   next();
 });
 
-router.get("http://spa-mall.shop:8080/health", (req, res) => {
-  const data = {
+router.get("/", (req, res) => {
+  const healthcheck = {
     uptime: process.uptime(),
     message: "Ok",
     date: new Date(),
   };
 
-  res.status(200).send(data);
+  res.status(200).send(healthcheck);
 });
 
 const server = http.createServer(app);
