@@ -91,4 +91,4 @@ app.get("/download/:imageName", (req, res) => {
   res.sendFile(__dirname + "/uploads/" + imageName.imageName);
 });
 
-server.listen(3000);
+server.listen(8080);
